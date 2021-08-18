@@ -4,25 +4,22 @@ import Nav from "./components/Nav";
 import styled from 'styled-components';
 import { useState } from 'react';
 
+// styled-components →
+const Container = styled.div`
+  margin: 10px;
+`;
 
+const DatesUl = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid rgba(0, 0, 0, 0.54);
+  border-bottom: none;
+  border-right: none;
+  padding: 0;
+`;
+// ← styled-components
 
 function App() {
-
-  // styled-components →
-  const Container = styled.div`
-    margin: 10px;
-  `;
-
-  const DatesUl = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border: 1px solid rgba(0, 0, 0, 0.54);
-    border-bottom: none;
-    border-right: none;
-    padding: 0;
-  `;
-  // ← styled-components
-
   const [dates, setDates] = useState(new Date());
   const days = [];
   const weeks = ["日", "月", "火", "水", "木", "金", "土"];
@@ -41,6 +38,16 @@ function App() {
     if (year === today.getFullYear() && month === today.getMonth()+1 && date === today.getDate()) {return true;}
     return false;
   }
+
+  /*
+  const [addShow, setAddShow] = useState(false);
+  let eAddSchedule = <AddSchedule show={addShow} />;
+  const changeAddShow = (year, month, date) => {
+    setAddShow(!addShow);
+    eAddSchedule = <AddSchedule show={addShow} changeAddShow={changeAddShow} year={year} month={month} date={date} />;
+  }
+  */
+
 
   for(let i = 0; i < 35; i++) {
     let year = startDate.getFullYear();
