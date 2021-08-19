@@ -7,7 +7,7 @@ const DateLi = styled.li`
   height: 120px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.54);
   border-right: 1px solid rgba(0, 0, 0, 0.54);
-  @media(min-width: 600px) {
+  @media screen and (min-width: 600px) {
     height: 155px;
   }
 `;
@@ -57,7 +57,7 @@ const DateBox = (props) => {
       </DateLi>
     </>
   );
-  
+
 }
 
 export default DateBox;
