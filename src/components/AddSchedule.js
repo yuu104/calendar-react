@@ -1,5 +1,5 @@
 
-import AddSubSchedule from '../AddSubSchedule';
+import AddSubSchedule from './AddSubSchedule';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -112,7 +112,7 @@ const AddSchedule = (props) => {
       place: placeItem,
       explain: explainItem
     }
-    props.addItems(newItem);
+    props.addItem(newItem);
     setTitleItem("");
     setPlaceItem("");
     setExplainItem("");
@@ -132,58 +132,47 @@ const AddSchedule = (props) => {
     setExplainItem(value);
   }
 
-  /*
-  const handleChangeState = (setState, value) => {
-    setState(value);
-  }
-  */
-
-  if (props.show) {
-    return (
-      <Overlay>
-        <Content>
-          <Close>
-            <CloseContent onClick={() => props.changeAddShow()}>×</CloseContent>
-          </Close>
-          <Title
-            type="text"
-            value={titleItem}
-            placeholder="タイトルと日時を追加"
-            name="title"
-            onChange={handleChangeTitle}
-          />
-          <Line></Line>
-          <AddSubSchedule
-            type="date" 
-            value={dateItem}
-            img={`${process.env.PUBLIC_URL}/watch.svg`}
-            handleChange={handleChangeDate}
-          />
-          <AddSubSchedule
-            type="text"
-            value={placeItem}
-            placeholder="場所を追加"
-            img={`${process.env.PUBLIC_URL}/map.svg`}
-            name="place" 
-            handleChange={handleChangePlace}
-          />
-          <AddSubSchedule
-            type="text"
-            value={explainItem}
-            placeholder="説明を追加"
-            img={`${process.env.PUBLIC_URL}/pen.svg`}
-            name="explanation" 
-            handleChange={handleChangeExplain}
-          />
-          <button type="button" onClick={handleSubmit}>保存</button>
-        </Content>
-      </Overlay>
+  return (
+    <Overlay>
+      <Content>
+        <Close>
+          <CloseContent onClick={() => props.changeAddShow()}>×</CloseContent>
+        </Close>
+        <Title
+          type="text"
+          value={titleItem}
+          placeholder="タイトルと日時を追加"
+          name="title"
+          onChange={handleChangeTitle}
+        />
+        <Line></Line>
+        <AddSubSchedule
+          type="date" 
+          value={dateItem}
+          img={`${process.env.PUBLIC_URL}/watch.svg`}
+          handleChange={handleChangeDate}
+        />
+        <AddSubSchedule
+          type="text"
+          value={placeItem}
+          placeholder="場所を追加"
+          img={`${process.env.PUBLIC_URL}/map.svg`}
+          name="place" 
+          handleChange={handleChangePlace}
+        />
+        <AddSubSchedule
+          type="text"
+          value={explainItem}
+          placeholder="説明を追加"
+          img={`${process.env.PUBLIC_URL}/pen.svg`}
+          name="explanation" 
+          handleChange={handleChangeExplain}
+        />
+        <button type="button" onClick={handleSubmit}>保存</button>
+      </Content>
+    </Overlay>
     );
-  } else {
-    return null;
-  }
   
-
 }
 
 export default AddSchedule;

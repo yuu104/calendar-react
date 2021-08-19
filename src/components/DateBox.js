@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import AddSchedule from './AddSchedule';
-import { useState } from 'react';
 import Schedules from './Schedules';
 
 // styled-components →
@@ -32,21 +30,10 @@ const Day = styled.div`
 // ← styled-components
 
 const DateBox = (props) => {
-  const [addShow, setAddShow] = useState(false);
-  const changeAddShow = () => {
-    setAddShow(!addShow);
-  }
-
-  const data = []; 
-  const [items, setItems] = useState(data);
-  const addItems = (newItem) => {
-    setItems([...items, newItem]);
-  }
-  //console.log(items[0]);
 
   return(
     <>
-      <DateLi onClick={() => changeAddShow()}>
+      <DateLi onClick={() => props.changeAddShow(props.year, props.month, props.date)}>
         {
           props.topDays ?
             <>
@@ -66,18 +53,11 @@ const DateBox = (props) => {
             {props.date}
           </Date>
         }
-        <Schedules items={items} />
+        <Schedules items={props.schedules} />
       </DateLi>
-      <AddSchedule 
-        show={addShow}
-        changeAddShow={changeAddShow}
-        addItems={addItems}
-        year={props.year}
-        month={props.month}
-        date={props.date}
-      />
     </>
   );
+  
 }
 
 export default DateBox;

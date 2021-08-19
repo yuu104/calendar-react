@@ -54,6 +54,7 @@ const AddSubSchedule = (props) => {
   const handleChange = (e) => {
     props.handleChange(e.target.value);
   }
+  //console.log(props.value);
 
   return (
     <Container>
@@ -69,6 +70,7 @@ const AddSubSchedule = (props) => {
       </InpContainer>
     </Container>
   );
+  
 }
 
 export default AddSubSchedule;

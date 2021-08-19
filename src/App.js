@@ -1,6 +1,7 @@
 import './App.css';
 import DateBox from './components/DateBox';
 import Nav from "./components/Nav";
+import AddSchedule from './components/AddSchedule';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ const DatesUl = styled.ul`
 // ← styled-components
 
 function App() {
+
   const [dates, setDates] = useState(new Date());
   const days = [];
   const weeks = ["日", "月", "火", "水", "木", "金", "土"];
@@ -39,15 +41,18 @@ function App() {
     return false;
   }
 
-  /*
+  // new →
   const [addShow, setAddShow] = useState(false);
-  let eAddSchedule = <AddSchedule show={addShow} />;
+  const [addYear, setAddYear] = useState(null);
+  const [addMonth, setAddMonth] = useState(null);
+  const [addDate, setAddDate] = useState(null);
   const changeAddShow = (year, month, date) => {
+    setAddYear(year);
+    setAddMonth(month);
+    setAddDate(date);
     setAddShow(!addShow);
-    eAddSchedule = <AddSchedule show={addShow} changeAddShow={changeAddShow} year={year} month={month} date={date} />;
   }
-  */
-
+  // ← new
 
   for(let i = 0; i < 35; i++) {
     let year = startDate.getFullYear();
@@ -56,12 +61,53 @@ function App() {
     let isThisMonth = thisMonth(month);
     let isToday = askToday(year, month, date);
     if (i < 7) {
-      days.push(<DateBox topDays="true" week={weeks[i]} year={year} month={month} date={date} isThisMonth={isThisMonth} isToday={isToday} />);
+      days.push({
+        topDays: true,
+        week: weeks[i],
+        year: year,
+        month: month,
+        date: date,
+        isThisMonth: isThisMonth,
+        isToday: isToday
+      });
     } else {
-      days.push(<DateBox year={year} month={month} date={date} isThisMonth={isThisMonth} isToday={isToday} />);
+      days.push({
+        topDays: false,
+        year: year,
+        month: month,
+        date: date,
+        isThisMonth: isThisMonth,
+        isToday: isToday
+      });
     }
     startDate.setDate(startDate.getDate() + 1);
   }
+  const [items , setItems] = useState([]);
+  const addItem = (item) => {
+    setItems([...items, item]);
+  }
+  const dateComponents = days.map((day) => {
+    let year = day.year;
+    let month = day.month < 10 ? "0" + day.month : day.month;
+    let date = day.date < 10 ? "0" + day.date : day.date;
+    const schedules = items.filter((item, index) => {
+      return item.date === `${year}-${month}-${date}`;
+    });
+    return (
+      <DateBox
+        key={`${year}-${month}-${date}`}
+        topDays={day.topDays}
+        week={day.week}
+        year={day.year}
+        month={day.month}
+        date={day.date}
+        isThisMonth={day.isThisMonth}
+        isToday={day.isToday}
+        changeAddShow={changeAddShow} 
+        schedules={schedules}
+      />
+    );
+  }); 
 
   const changeMonth = (key) => { // 月移動関数
     if (key === "prev") {
@@ -73,13 +119,13 @@ function App() {
     }
   }
 
-
   return (
     <Container>
       <Nav dates={dates} changeMonth={changeMonth} />
       <DatesUl>
-        {days}
+        {dateComponents}
       </DatesUl>
+      {addShow && <AddSchedule year={addYear} month={addMonth} date={addDate} changeAddShow={changeAddShow} addItem={addItem} />}
     </Container>
   );
 }

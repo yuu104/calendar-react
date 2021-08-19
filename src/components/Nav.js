@@ -15,6 +15,7 @@ const YearMonth = styled.h3`
 // ← styled-components
 
 const Nav = (props) => {
+
   return (
     <NavCoutainer>
       <button onClick={() => props.changeMonth("prev")}>＜</button>
@@ -27,6 +28,7 @@ const Nav = (props) => {
       <button onClick={() => props.changeMonth("next")}>＞</button>
     </NavCoutainer>
   );
+  
 }
 
 export default Nav;
