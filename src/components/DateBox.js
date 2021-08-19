@@ -53,7 +53,7 @@ const DateBox = (props) => {
             {props.date}
           </Date>
         }
-        <Schedules items={props.schedules} />
+        <Schedules items={props.schedules} changeEditShow={props.changeEditShow} />
       </DateLi>
     </>
   );

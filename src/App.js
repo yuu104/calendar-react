@@ -2,6 +2,7 @@ import './App.css';
 import DateBox from './components/DateBox';
 import Nav from "./components/Nav";
 import AddSchedule from './components/AddSchedule';
+import Edit from './components/Edit';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -41,7 +42,7 @@ function App() {
     return false;
   }
 
-  // new →
+  // スケジュール追加
   const [addShow, setAddShow] = useState(false);
   const [addYear, setAddYear] = useState(null);
   const [addMonth, setAddMonth] = useState(null);
@@ -52,8 +53,16 @@ function App() {
     setAddDate(date);
     setAddShow(!addShow);
   }
-  // ← new
 
+  // スケジュール確認
+  const [editShow, setEditShow] = useState(false);
+  const [item, setItem] = useState({});
+  const changeEditShow = (i) => {
+    setItem(i);
+    setEditShow(!editShow);
+  }
+
+  // DateBoxコンポーネント表示
   for(let i = 0; i < 35; i++) {
     let year = startDate.getFullYear();
     let month = startDate.getMonth() + 1;
@@ -86,11 +95,17 @@ function App() {
   const addItem = (item) => {
     setItems([...items, item]);
   }
+  const deleteItem = (i) => {
+    let newItems = items.filter((item) => {
+      return item !== i;
+    });
+    setItems(newItems);
+  }
   const dateComponents = days.map((day) => {
     let year = day.year;
     let month = day.month < 10 ? "0" + day.month : day.month;
     let date = day.date < 10 ? "0" + day.date : day.date;
-    const schedules = items.filter((item, index) => {
+    const schedules = items.filter((item) => {
       return item.date === `${year}-${month}-${date}`;
     });
     return (
@@ -105,11 +120,13 @@ function App() {
         isToday={day.isToday}
         changeAddShow={changeAddShow} 
         schedules={schedules}
+        changeEditShow={changeEditShow}
       />
     );
   }); 
 
-  const changeMonth = (key) => { // 月移動関数
+  // 月移動関数
+  const changeMonth = (key) => { 
     if (key === "prev") {
       let newDates = new Date(dates.setMonth(dates.getMonth() - 1));
       setDates(newDates);
@@ -126,6 +143,7 @@ function App() {
         {dateComponents}
       </DatesUl>
       {addShow && <AddSchedule year={addYear} month={addMonth} date={addDate} changeAddShow={changeAddShow} addItem={addItem} />}
+      {editShow && <Edit changeEditShow={changeEditShow} item={item} deleteItem={deleteItem} />}
     </Container>
   );
 }
