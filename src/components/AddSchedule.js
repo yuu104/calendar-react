@@ -90,6 +90,25 @@ const Line = styled.div`
     width: 50%;
   }
 `;
+
+const Img = styled.img`
+  width: 15px;
+  height: 15px;
+`;
+
+const Button = styled.div`
+  float: right;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 10px;
+  border: 1px solid rgb(121, 134, 203);
+  border-radius: 5px;
+  padding: 3px 10px;
+  color: rgb(121, 134, 203);
+  &:hover {
+    background-color: #EEEEEE;
+  }
+`;
 // ← styled-components
 
 
@@ -106,17 +125,24 @@ const AddSchedule = (props) => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newItem = {
+    if(titleItem == "") {
+      setTitleItem("");
+      setPlaceItem("");
+      setExplainItem("");
+      props.changeAddShow();
+    } else {
+      const newItem = {
       title: titleItem,
       date: dateItem,
       place: placeItem,
       explain: explainItem
+      }
+      props.addItem(newItem);
+      setTitleItem("");
+      setPlaceItem("");
+      setExplainItem("");
+      props.changeAddShow();
     }
-    props.addItem(newItem);
-    setTitleItem("");
-    setPlaceItem("");
-    setExplainItem("");
-    props.changeAddShow();
   }
 
   const [dateItem, setDateItem] = useState(`${year}-${month}-${date}`);
@@ -136,7 +162,9 @@ const AddSchedule = (props) => {
     <Overlay>
       <Content>
         <Close>
-          <CloseContent onClick={() => props.changeAddShow()}>×</CloseContent>
+          <CloseContent onClick={() => props.changeAddShow()}>
+            <Img src={`${process.env.PUBLIC_URL}/close.svg`} />
+          </CloseContent>
         </Close>
         <Title
           type="text"
@@ -168,7 +196,7 @@ const AddSchedule = (props) => {
           name="explanation" 
           handleChange={handleChangeExplain}
         />
-        <button type="button" onClick={handleSubmit}>保存</button>
+        <Button onClick={handleSubmit}>保存</Button>
       </Content>
     </Overlay>
     );

@@ -104,14 +104,20 @@ const Edit = (props) => {
           <Title>{props.item.title}</Title>
           <Date>{props.item.date}</Date>
         </TitleBox>
-        <Sub>
-          <Img src={`${process.env.PUBLIC_URL}/map.svg`} /> 
-          <SubTitle>{props.item.place}</SubTitle>
-        </Sub>
-        <Sub>
-          <Img src={`${process.env.PUBLIC_URL}/pen.svg`} /> 
-          <SubTitle>{props.item.explain}</SubTitle>
-        </Sub>
+        {props.item.place !== "" ? 
+          <Sub>
+            <Img src={`${process.env.PUBLIC_URL}/map.svg`} /> 
+            <SubTitle>{props.item.place}</SubTitle>
+          </Sub>
+          : null
+        }
+        {props.item.explain !== "" ?
+          <Sub>
+            <Img src={`${process.env.PUBLIC_URL}/pen.svg`} /> 
+            <SubTitle>{props.item.explain}</SubTitle>
+          </Sub>
+          : null
+        }
       </Content>
     </Overlay>
   );
