@@ -1,5 +1,5 @@
 # Calendar-App
-This is a simple calendar application that I built to learn React.
+This is a simple calendar application that I built to learn React.　
 https://yuu104.github.io/calendar-react/
 
 # DEMO
